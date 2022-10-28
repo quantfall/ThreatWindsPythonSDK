@@ -15,10 +15,56 @@ _You should be aware that these functions return two values. The first **respons
 
 ### Function sent_entities
 
-_To request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:
-_
+_To request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:_
+
 ```
 response, code = pythreatwinds_sdk.sent_entities(new_entities)
+```
+
+Where new_entities must have the following format:
+
+```
+[
+  {
+        "type": "malware",
+        "value": "Dridex",
+        "reputation": -3,
+        "attributes": [],
+        "associations": [
+            {
+                "name": "",
+                "comment":"",
+                "entity":{
+                    "type": "ip",
+                    "value": "51.178.161.32",
+                    "reputation": -3,
+                    "attributes":[],
+                    "associations":[]
+                }
+            }
+        ]
+    }
+]
+```
+
+### Function sent_associations
+
+_For new associations, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
+
+```
+response, code = pythreatwinds_sdk.sent_associations(new_associations)
+```
+
+Where new_associations must have the following format:
+
+```
+{
+  "associations": [
+    "b97f454d-afad-421b-b157-38cda7d0b612", 
+    "22721539-0471-440b-829e-069a9cdcc6ae"
+  ],
+  "comment": "Any important comment about the association"
+}
 ```
 
 ### Function get_def_entities
