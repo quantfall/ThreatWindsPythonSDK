@@ -75,12 +75,12 @@ def get_def_entities_test():
     print("Showing response:",response)
     print("Showing return code:",code)
 
-def get_entity_search_test():
+def get_entities_search_test():
     """
-    This function tests the operation of the function get_entity_search
+    This function tests the operation of the function get_entities_search
     """
     print("######################################################################")
-    print("################ Test of the function get_entity_search ############### ")
+    print("################ Test of the function get_entities_search ############### ")
     print("######################################################################")
 
     print("\n")
@@ -89,17 +89,17 @@ def get_entity_search_test():
     print("limit: 50")
     print("offset: 0")
 
-    response, code = get_entity_search(value= value)
+    response, code = get_entities_search(value= value)
 
     print("Showing response:",response)
     print("Showing return code:",code)
 
-def get_entity_type_test():
+def get_entities_type_test():
     """
-    This function tests the operation of the function get_entity_type
+    This function tests the operation of the function get_entities_type
     """
     print("######################################################################")
-    print("################ Test of the function get_entity_type ############### ")
+    print("################ Test of the function get_entities_type ############### ")
     print("######################################################################")
 
 
@@ -114,7 +114,26 @@ def get_entity_type_test():
     print("lsa: now-24h")
 
 
-    response, code = get_entity_type(value= value)
+    response, code = get_entities_type(value= value)
 
     print("Showing response:",response)
     print("Showing return code:",code) 
+
+def get_entity_id_test():
+    """
+    This function tests the operation of the function get_entity_id
+    """
+    print("######################################################################")
+    print("################ Test of the function get_entity_id ############### ")
+    print("######################################################################")
+
+    print("\n")
+    value = "22721539-0471-440b-829e-069a9cdcc6ae"
+    print("Value: ",value)
+    print("limit: 50")
+    print("offset: 0")
+
+    response, code = get_entity_id(value= value)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

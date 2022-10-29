@@ -4,9 +4,9 @@ from .requ import *
 
 class Creator(ABC):
     
-    def build_request(self):
+    def build_request(self, resourc, request = None):
         # Call the factory method to create a Product object.
-        req = self.factory_method()
+        req = self.factory_method(resourc, request)
 
         return req
 
@@ -16,10 +16,9 @@ class Creator(ABC):
 
 class PostCreatorConcret(Creator):
 
-    def factory_method(self)->Request:
-        return PostRequest()
+    def factory_method(self,resource, params)->Request:
+        return PostRequest(resource, params)
 
 class GetCreatorConcret(Creator):
-
-    def factory_method(self)->Request:
-        return GetRequest()
+    def factory_method(self, resource, params)->Request:
+        return GetRequest(resource,params)

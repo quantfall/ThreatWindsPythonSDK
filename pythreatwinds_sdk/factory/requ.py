@@ -13,12 +13,6 @@ class Request(ABC):
         tw_api_secret = os.environ.get("TW_API_SECRET", "")
         self.headers = {"api-key":tw_api_key,"api-secret":tw_api_secret}
 
-    def add_params(self,params):
-        self.params = params
-
-    def add_body(self,body):
-        self.body = body
-
     @abstractmethod
     def operation(self):
         pass
@@ -26,10 +20,12 @@ class Request(ABC):
 
 class PostRequest(Request):
 
-    def __init__(self):
+    def __init__(self, resourc, body):
         self.connect = Connection()
-        self.headers = None
-        self.body = None
+        url = "https://api.sandbox.threatwinds.com/api/v1/" + resourc
+        self.connect.add_connection(url)
+        self.add_headers()
+        self.body = body
     
     def operation(self):
         """
@@ -40,10 +36,12 @@ class PostRequest(Request):
 
 class GetRequest(Request):
 
-    def __init__(self):
+    def __init__(self, resourc, params):
         self.connect = Connection()
-        self.headers = None
-        self.params = None
+        url = "https://api.sandbox.threatwinds.com/api/v1/" + resourc
+        self.connect.add_connection(url)
+        self.add_headers()
+        self.params = params
     
     def operation(self):
         """

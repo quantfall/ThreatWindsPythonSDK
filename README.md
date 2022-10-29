@@ -75,11 +75,11 @@ _To request entity definitions, you need to call the following function. If the 
 response, code = pythreatwinds_sdk.get_def_entities()
 ```
 
-### Function get_entity_search
+### Function get_entities_search
 
 _To find a list of entties containing a string, you must call to the following function:_
 ```
-values, code = pythreatwinds_sdk.get_entity_search(value, limit, offset)
+values, code = pythreatwinds_sdk.get_entities_search(value, limit, offset)
 ```
 
 _Must be passed as arguments:_
@@ -87,11 +87,11 @@ _Must be passed as arguments:_
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
 
-  ### Function get_entity_type
+  ### Function get_entities_type
 
 _To find a list of entities of some type, you must call the following function:_
 ```
-values, code = pythreatwinds_sdk.get_entity_type(value, limit, offset, reputation, accuracy, lsa)
+values, code = pythreatwinds_sdk.get_entities_type(value, limit, offset, reputation, accuracy, lsa)
 ```
 
 _Must be passed as arguments:_
@@ -101,3 +101,15 @@ _Must be passed as arguments:_
     -reputation: Must be any, bad or good. Default bad. Is optional
     -accuracy: Must be an integer betwen o to 3. Default 0. Is optional
     -lsa: Must be a timestamp in seconds since Unix(UTC) or a relative time like now-15m, now-30m, now-1h, now-8h, now-24h, now-7d, now-30d, now-90d or now-120d. Default now-24h. Is optional
+
+### Function get_entity_id
+
+_To find an entity with an id, you must call to the following function:_
+```
+values, code = pythreatwinds_sdk.get_entity_id(value, limit, offset)
+```
+
+_Must be passed as arguments:_
+    -value: Entity ID
+    -limit: Must be an integer>0. Default 50. Is optional
+    -offset: Must be an integer>=0. Default 0. Is optional
