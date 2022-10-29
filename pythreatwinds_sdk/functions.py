@@ -23,7 +23,6 @@ def sent_entities(new_entities):
     resourc = "entities"
     creator = PostCreatorConcret()
     new_request = creator.build_request(resourc, new_entities)
-    print(new_request.connect.endpoint)
     return (run_request(new_request))
 
 #Function to sent new associations to API of ThreatWinds
@@ -146,4 +145,25 @@ def get_entity_value(value, limit = 50, offset = 0):
 
     creator = GetCreatorConcret()
     new_request = creator.build_request(resourc, params)
+    return (run_request(new_request))
+
+#Function to sent new geoip location to API of ThreatWinds
+def sent_geoip_location(new_location):
+    """
+    This function makes a POST request to the endpoint
+    https://api.sandbox.threatwinds.com/api/v1/geoip/location
+    Note that it returns two values: on request
+    successful, returns the response and response code.
+    In case of a bad request, it returns the value None and the response code.
+    In case there are problems with the connection, return the error body as 
+    the first value and 0 as the second value
+    """
+
+    #Load .env in environment variables
+    load_dotenv()
+
+    #Building new instance of request object
+    resourc = "geoip/location"
+    creator = PostCreatorConcret()
+    new_request = creator.build_request(resourc, new_location)
     return (run_request(new_request))

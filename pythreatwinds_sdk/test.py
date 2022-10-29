@@ -156,3 +156,31 @@ def get_entity_value_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def sent_geoip_location_test():
+    """
+    This function tests the operation of the function sent_geoip_location
+    """
+    print("######################################################################")
+    print("################ Test of the function sent_geoip_location ############### ")
+    print("######################################################################")
+
+    print("\n")
+
+    location ={
+  "accuracyRadius": 100,
+  "city": "Canberra",
+  "country": "Australia",
+  "countryCode": "AU",
+  "latitude": 453.334,
+  "longitude": -453.334,
+  "segment": "1.1.1.0/24"
+}
+
+    print("··············NEW LOCATION················")
+    print(location)
+
+    response, code = sent_geoip_location(location)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

@@ -125,3 +125,25 @@ _Must be passed as arguments:_
     -value: Entity value
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
+
+### Function sent_geoip_location
+
+_For sent a new location, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
+
+```
+response, code = pythreatwinds_sdk.sent_geoip_location(new_location)
+```
+
+Where new_location must have the following format:
+
+```
+{
+  "accuracyRadius": 100,
+  "city": "Canberra",
+  "country": "Australia",
+  "countryCode": "AU",
+  "latitude": 453.334,
+  "longitude": -453.334,
+  "segment": "1.1.1.0/24"
+}
+```
