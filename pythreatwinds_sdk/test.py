@@ -93,3 +93,28 @@ def get_entity_search_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def get_entity_type_test():
+    """
+    This function tests the operation of the function get_entity_type
+    """
+    print("######################################################################")
+    print("################ Test of the function get_entity_type ############### ")
+    print("######################################################################")
+
+
+    print("\n")
+    value = "malware"
+    print("Value: ",value)
+    print("format: list")
+    print("limit: 50")
+    print("offset: 0")
+    print("reputation: bad")
+    print("accuracy: 0")
+    print("lsa: now-24h")
+
+
+    response, code = get_entity_type(value= value)
+
+    print("Showing response:",response)
+    print("Showing return code:",code) 

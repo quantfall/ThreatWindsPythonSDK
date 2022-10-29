@@ -77,7 +77,7 @@ response, code = pythreatwinds_sdk.get_def_entities()
 
 ### Function get_entity_search
 
-_To find a list of enttiies containing a string, you must call to the following function:_
+_To find a list of entties containing a string, you must call to the following function:_
 ```
 values, code = pythreatwinds_sdk.get_entity_search(value, limit, offset)
 ```
@@ -86,3 +86,18 @@ _Must be passed as arguments:_
     -value: Must be a string that will be searched.If you don't have quotes, it will be searched as independent words, only elements that contain all the words will be returned. The order of the words doesn't matter. If it is enclosed in quotes: it will be searched as a complete phrase, only elements that contain all the words in the exact order will be returned. The word "or" works like the OR operator in a programming language. The words or, and, the, he, she, it, etc. are not taken into account as search parameters. A hyphen works like the negation operator in a programming language.
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
+
+  ### Function get_entity_type
+
+_To find a list of entities of some type, you must call the following function:_
+```
+values, code = pythreatwinds_sdk.get_entity_type(value, limit, offset, reputation, accuracy, lsa)
+```
+
+_Must be passed as arguments:_
+    -value: entity type. Consult **Function get_def_entities**
+    -limit: Must be an integer>0. Default 50. Is optional
+    -offset: Must be an integer>=0. Default 0. Is optional
+    -reputation: Must be any, bad or good. Default bad. Is optional
+    -accuracy: Must be an integer betwen o to 3. Default 0. Is optional
+    -lsa: Must be a timestamp in seconds since Unix(UTC) or a relative time like now-15m, now-30m, now-1h, now-8h, now-24h, now-7d, now-30d, now-90d or now-120d. Default now-24h. Is optional
