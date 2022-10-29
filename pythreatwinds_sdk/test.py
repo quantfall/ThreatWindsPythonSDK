@@ -184,3 +184,20 @@ def sent_geoip_location_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def get_geoip_location_test():
+    """
+    This function tests the operation of the function get_geoip_location
+    """
+    print("######################################################################")
+    print("################ Test of the function get_geoip_location ############### ")
+    print("######################################################################")
+
+    print("\n")
+    ip = "1.1.1.0"
+    print("IP: ",ip)
+
+    response, code = get_geoip_location(ip)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

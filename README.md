@@ -147,3 +147,13 @@ Where new_location must have the following format:
   "segment": "1.1.1.0/24"
 }
 ```
+
+### Function get_geoip_location
+
+_To find an IP address, you must call to the following function:_
+```
+values, code = pythreatwinds_sdk.get_geoip_location(ip)
+```
+
+_Must be passed as arguments:_
+    -ip: IP address
