@@ -113,3 +113,15 @@ _Must be passed as arguments:_
     -value: Entity ID
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
+
+### Function get_entity_value
+
+_To find an entity with an value, you must call to the following function:_
+```
+values, code = pythreatwinds_sdk.get_entity_value(value, limit, offset)
+```
+
+_Must be passed as arguments:_
+    -value: Entity value
+    -limit: Must be an integer>0. Default 50. Is optional
+    -offset: Must be an integer>=0. Default 0. Is optional

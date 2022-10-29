@@ -137,3 +137,22 @@ def get_entity_id_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def get_entity_value_test():
+    """
+    This function tests the operation of the function get_entity_value
+    """
+    print("######################################################################")
+    print("################ Test of the function get_entity_value ############### ")
+    print("######################################################################")
+
+    print("\n")
+    value = "Dridex"
+    print("Value: ",value)
+    print("limit: 50")
+    print("offset: 0")
+
+    response, code = get_entity_value(value= value)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

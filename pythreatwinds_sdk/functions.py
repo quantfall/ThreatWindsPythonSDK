@@ -110,7 +110,7 @@ def get_entities_type(value, limit = 50, offset = 0, reputation = "bad", accurac
 def get_entity_id(value, limit = 50, offset = 0):
     """
     This function makes a GET request to the endpoint
-    https://api.sandbox.threatwinds.com/api/v1/entities/id
+    https://api.sandbox.threatwinds.com/api/v1/entity/id
     Note that it returns two values: on request
     successful, it returns a list of entities found and a response code.
     In case of a bad request, it returns the value None and the response code.
@@ -122,6 +122,27 @@ def get_entity_id(value, limit = 50, offset = 0):
     
     params = {"value": value, "limit":limit, "offset": offset}
     resourc = "entity/id"
+
+    creator = GetCreatorConcret()
+    new_request = creator.build_request(resourc, params)
+    return (run_request(new_request))
+
+#Function to request through an value, a search of entities to the ThreatWinds API
+def get_entity_value(value, limit = 50, offset = 0):
+    """
+    This function makes a GET request to the endpoint
+    https://api.sandbox.threatwinds.com/api/v1/entity/value
+    Note that it returns two values: on request
+    successful, it returns a list of entities found and a response code.
+    In case of a bad request, it returns the value None and the response code.
+    In case there are problems with the connection, return the error body as
+    the first value and 0 as the second value
+    """
+    #Load .env in environment variables
+    load_dotenv()
+    
+    params = {"value": value, "limit":limit, "offset": offset}
+    resourc = "entity/value"
 
     creator = GetCreatorConcret()
     new_request = creator.build_request(resourc, params)
