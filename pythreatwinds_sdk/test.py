@@ -201,3 +201,27 @@ def get_geoip_location_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def sent_geoip_organization_test():
+    """
+    This function tests the operation of the function sent_geoip_organization
+    """
+    print("######################################################################")
+    print("################ Test of the function sent_geoip_organization ############### ")
+    print("######################################################################")
+
+    print("\n")
+
+    organization ={
+  "asn": 353453,
+  "aso": "CloudFlare INC",
+  "segment": "1.1.1.0/24"
+}
+
+    print("··············NEW ORGANIZATION················")
+    print(organization)
+
+    response, code = sent_geoip_organization(organization)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

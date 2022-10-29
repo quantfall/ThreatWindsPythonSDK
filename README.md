@@ -157,3 +157,21 @@ values, code = pythreatwinds_sdk.get_geoip_location(ip)
 
 _Must be passed as arguments:_
     -ip: IP address
+
+### Function sent_geoip_organization
+
+_For sent a new organization, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
+
+```
+response, code = pythreatwinds_sdk.sent_geoip_organization(new_organization)
+```
+
+Where new_organization must have the following format:
+
+```
+{
+  "asn": 353453,
+  "aso": "CloudFlare INC",
+  "segment": "1.1.1.0/24"
+}
+```

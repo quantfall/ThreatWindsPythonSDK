@@ -187,3 +187,24 @@ def get_geoip_location(ip):
     creator = GetCreatorConcret()
     new_request = creator.build_request(resourc)
     return (run_request(new_request))
+
+#Function to sent new geoip organization to API of ThreatWinds
+def sent_geoip_organization(new_organization):
+    """
+    This function makes a POST request to the endpoint
+    https://api.sandbox.threatwinds.com/api/v1/geoip/organization
+    Note that it returns two values: on request
+    successful, returns the response and response code.
+    In case of a bad request, it returns the value None and the response code.
+    In case there are problems with the connection, return the error body as 
+    the first value and 0 as the second value
+    """
+
+    #Load .env in environment variables
+    load_dotenv()
+
+    #Building new instance of request object
+    resourc = "geoip/organization"
+    creator = PostCreatorConcret()
+    new_request = creator.build_request(resourc, new_organization)
+    return (run_request(new_request))
