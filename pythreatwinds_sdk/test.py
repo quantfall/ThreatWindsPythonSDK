@@ -74,3 +74,22 @@ def get_def_entities_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def get_entity_search_test():
+    """
+    This function tests the operation of the function get_entity_search
+    """
+    print("######################################################################")
+    print("################ Test of the function get_entity_search ############### ")
+    print("######################################################################")
+
+    print("\n")
+    value = "malware"
+    print("Value: ",value)
+    print("limit: 50")
+    print("offset: 0")
+
+    response, code = get_entity_search(value= value)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

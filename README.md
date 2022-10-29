@@ -15,7 +15,7 @@ _You should be aware that these functions return two values. The first **respons
 
 ### Function sent_entities
 
-_To request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:_
+_For new entities, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
 
 ```
 response, code = pythreatwinds_sdk.sent_entities(new_entities)
@@ -69,8 +69,20 @@ Where new_associations must have the following format:
 
 ### Function get_def_entities
 
-_For new entities, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
+_To request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:_
 
 ```
 response, code = pythreatwinds_sdk.get_def_entities()
 ```
+
+### Function get_entity_search
+
+_To find a list of enttiies containing a string, you must call to the following function:_
+```
+values, code = pythreatwinds_sdk.get_entity_search(value, limit, offset)
+```
+
+_Must be passed as arguments:_
+    -value: Must be a string that will be searched.If you don't have quotes, it will be searched as independent words, only elements that contain all the words will be returned. The order of the words doesn't matter. If it is enclosed in quotes: it will be searched as a complete phrase, only elements that contain all the words in the exact order will be returned. The word "or" works like the OR operator in a programming language. The words or, and, the, he, she, it, etc. are not taken into account as search parameters. A hyphen works like the negation operator in a programming language.
+    -limit: Must be an integer>0. Default 50. Is optional
+    -offset: Must be an integer>=0. Default 0. Is optional

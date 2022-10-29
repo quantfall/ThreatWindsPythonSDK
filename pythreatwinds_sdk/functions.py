@@ -70,3 +70,18 @@ def get_def_entities():
     new_request.add_headers()
     new_request.connect.add_connection(url)
     return (run_request(new_request))
+
+#Function to request entity definitions to the API of ThreatWinds
+def get_entity_search(value, limit = 50, offset = 0):
+    #Load .env in environment variables
+    load_dotenv()
+    
+    params = {"value": value, "limit":limit, "offset": offset}
+    url = "https://api.sandbox.threatwinds.com/api/v1/entities/search"
+
+    creator = GetCreatorConcret()
+    new_request = creator.build_request()
+    new_request.add_headers()
+    new_request.connect.add_connection(url)
+    new_request.add_params(params)
+    return (run_request(new_request))
