@@ -1,4 +1,4 @@
-def run_request(requ):
+def run_request(request_object):
     """
     Function for execute the request to the endpoint
     """
@@ -7,8 +7,8 @@ def run_request(requ):
     while True:
         #Connection attemp, if this fail, retry again two more times
         try:
-            response = requ.operation()
-            #If the code is 200, request made correctly
+            response = request_object.operation()
+            #If the code is 200 or 202, request made correctly
             if (response.status_code == 200) or (response.status_code == 202):
                 print("------------Success------------")
                 return (response.json(),response.status_code)

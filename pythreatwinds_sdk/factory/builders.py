@@ -16,8 +16,8 @@ class Creator(ABC):
 
 class PostCreatorConcret(Creator):
 
-    def factory_method(self,resource, params)->Request:
-        return PostRequest(resource, params)
+    def factory_method(self,resource, body)->Request:
+        return PostRequest(resource, body)
 
 class GetCreatorConcret(Creator):
     def factory_method(self, resource, params)->Request:

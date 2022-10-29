@@ -225,3 +225,20 @@ def sent_geoip_organization_test():
 
     print("Showing response:",response)
     print("Showing return code:",code)
+
+def get_geoip_organization_test():
+    """
+    This function tests the operation of the function get_geoip_organization
+    """
+    print("######################################################################")
+    print("################ Test of the function get_geoip_organization ############### ")
+    print("######################################################################")
+
+    print("\n")
+    ip = "1.1.1.0"
+    print("IP: ",ip)
+
+    response, code = get_geoip_organization(ip)
+
+    print("Showing response:",response)
+    print("Showing return code:",code)

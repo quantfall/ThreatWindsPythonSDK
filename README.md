@@ -3,11 +3,27 @@
 _ThreatWindsPythonSDK is a set of tools that allow interaction with ThreatWinds API. This SDK has functions to obtain information about active threats, and at the same time add new threats_
 
 ## Getting started
+_You must create in the root of your project an .env file that will contain the api-key and the api-secret of the ThreatWinds API. You should define them with the names TW_API_KEY and TW_API_SECRET._
+
 ### Requirements
 
 Python 3.7+
 requests 2.28.1
 python-dotenv 0.21.0
+
+_For install the requirements:_
+
+```
+pip install -r requirements.txt
+
+```
+
+_or:_
+
+```
+python -m pip install requests
+python -m pip install python-dotenv
+```
 
 ## Deploy
 
@@ -15,13 +31,13 @@ _You should be aware that these functions return two values. The first **respons
 
 ### Function sent_entities
 
-_For new entities, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
+_For insert new entities, you need to call the following function. If the request is correct, the first value received **response** will be an acknowledged message:_
 
 ```
 response, code = pythreatwinds_sdk.sent_entities(new_entities)
 ```
 
-Where new_entities must have the following format:
+Where new_entities must be a list of objects in the following format:
 
 ```
 [
@@ -49,13 +65,13 @@ Where new_entities must have the following format:
 
 ### Function sent_associations
 
-_For new associations, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
+_For insert new associations, you need to call the following function. If the request is correct, the first value received **response** will be an acknowledged message:_
 
 ```
 response, code = pythreatwinds_sdk.sent_associations(new_associations)
 ```
 
-Where new_associations must have the following format:
+Where new_associations must be a objects in the following format:
 
 ```
 {
@@ -69,7 +85,7 @@ Where new_associations must have the following format:
 
 ### Function get_def_entities
 
-_To request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:_
+_For request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:_
 
 ```
 response, code = pythreatwinds_sdk.get_def_entities()
@@ -77,9 +93,9 @@ response, code = pythreatwinds_sdk.get_def_entities()
 
 ### Function get_entities_search
 
-_To find a list of entties containing a string, you must call to the following function:_
+_For find a list of entities containing a string, you must call to the following function. If the request is correct, the first value received **response** will be a list of the entities found:_
 ```
-values, code = pythreatwinds_sdk.get_entities_search(value, limit, offset)
+response, code = pythreatwinds_sdk.get_entities_search(value, limit, offset)
 ```
 
 _Must be passed as arguments:_
@@ -89,13 +105,13 @@ _Must be passed as arguments:_
 
   ### Function get_entities_type
 
-_To find a list of entities of some type, you must call the following function:_
+_For find a list of entities of some type, you must call the following function. If the request is correct, the first value received **response** will be a list of the entities found:_
 ```
-values, code = pythreatwinds_sdk.get_entities_type(value, limit, offset, reputation, accuracy, lsa)
+response, code = pythreatwinds_sdk.get_entities_type(value, limit, offset, reputation, accuracy, lsa)
 ```
 
 _Must be passed as arguments:_
-    -value: entity type. Consult **Function get_def_entities**
+    -value: entity type.Must be a string. Consult **Function get_def_entities**
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
     -reputation: Must be any, bad or good. Default bad. Is optional
@@ -104,25 +120,25 @@ _Must be passed as arguments:_
 
 ### Function get_entity_id
 
-_To find an entity with an id, you must call to the following function:_
+_For find an entity with an id, you must call to the following function. If the request is correct, the first value received **response** will be the entity found:_
 ```
-values, code = pythreatwinds_sdk.get_entity_id(value, limit, offset)
+response, code = pythreatwinds_sdk.get_entity_id(value, limit, offset)
 ```
 
 _Must be passed as arguments:_
-    -value: Entity ID
+    -value: Entity ID. Must be a string
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
 
 ### Function get_entity_value
 
-_To find an entity with an value, you must call to the following function:_
+_For find an entity with an value, you must call to the following function. If the request is correct, the first value received **response** will be the entity found:_
 ```
-values, code = pythreatwinds_sdk.get_entity_value(value, limit, offset)
+response, code = pythreatwinds_sdk.get_entity_value(value, limit, offset)
 ```
 
 _Must be passed as arguments:_
-    -value: Entity value
+    -value: Entity value. Must be a string
     -limit: Must be an integer>0. Default 50. Is optional
     -offset: Must be an integer>=0. Default 0. Is optional
 
@@ -134,7 +150,7 @@ _For sent a new location, you need to call the following function. If the reques
 response, code = pythreatwinds_sdk.sent_geoip_location(new_location)
 ```
 
-Where new_location must have the following format:
+Where new_location must be an object with the following format:
 
 ```
 {
@@ -150,13 +166,13 @@ Where new_location must have the following format:
 
 ### Function get_geoip_location
 
-_To find an IP address, you must call to the following function:_
+_For find the geolocation of the given IP, you must call to the following function. If the request is correct, the first value received **response** will be the geolocation found:_
 ```
-values, code = pythreatwinds_sdk.get_geoip_location(ip)
+response, code = pythreatwinds_sdk.get_geoip_location(ip)
 ```
 
 _Must be passed as arguments:_
-    -ip: IP address
+    -ip: IP address. Must be a string
 
 ### Function sent_geoip_organization
 
@@ -166,7 +182,7 @@ _For sent a new organization, you need to call the following function. If the re
 response, code = pythreatwinds_sdk.sent_geoip_organization(new_organization)
 ```
 
-Where new_organization must have the following format:
+Where new_location must be an object with the following format:
 
 ```
 {
@@ -175,3 +191,23 @@ Where new_organization must have the following format:
   "segment": "1.1.1.0/24"
 }
 ```
+
+### Function get_geoip_organization
+
+_For find the organization of the given IP, you must call to the following function. If the request is correct, the first value received **response** will be the organization found:_
+```
+response, code = pythreatwinds_sdk.get_geoip_organization(ip)
+```
+
+_Must be passed as arguments:_
+    -ip: IP address. Must be a string
+
+## Running tests
+If you want to get a demo of how functions work, some test functions with default values ​​have been developed, which you can call by simply adding the phrase _test to the name of the function you want to test. The following example shows how to call the function to test sent_entities:
+
+```
+sent_entities_test()
+```
+
+## Licence
+_This project is under MIT Licence_
