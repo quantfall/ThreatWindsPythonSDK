@@ -3,7 +3,7 @@
 _ThreatWindsPythonSDK is a set of tools that allow interaction with ThreatWinds API. This SDK has functions to obtain information about active threats, and at the same time add new threats_
 
 ## Getting started
-_You must create in the root of your project an .env file that will contain the api-key and the api-secret of the ThreatWinds API. You should define them with the names TW_API_KEY and TW_API_SECRET._
+_You must create in the root of your project an .env file that will contain the values ​​TW_AUTHORIZATION, or TW_API_KEY and TW_API_SECRET._
 
 ### Requirements
 

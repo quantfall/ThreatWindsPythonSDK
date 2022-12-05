@@ -10,11 +10,15 @@ class Request(ABC):
     
     def add_headers(self):
         """
-        Function to add TW API KEY and TW API SECRET to request object headers
+        Function to add TW_AUTHORIZATION or TW API KEY and TW API SECRET to request object headers
         """
-        tw_api_key = os.environ.get("TW_API_KEY", "")
-        tw_api_secret = os.environ.get("TW_API_SECRET", "")
-        self.headers = {"api-key":tw_api_key,"api-secret":tw_api_secret}
+        tw_authorization = os.environ.get("TW_AUTHORIZATION", "")
+        if tw_authorization != "":
+            self.headers = {"Authorization":tw_authorization}
+        else:
+            tw_api_key = os.environ.get("TW_API_KEY", "")
+            tw_api_secret = os.environ.get("TW_API_SECRET", "")
+            self.headers = {"api-key":tw_api_key,"api-secret":tw_api_secret}
 
     @abstractmethod
     def operation(self):
