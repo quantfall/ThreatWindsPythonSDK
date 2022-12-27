@@ -8,55 +8,52 @@ class Request(ABC):
     def __init__(self):
         pass
     
-    def add_headers(self):
+    def add_headers(self, connection):
         """
         Function to add TW_AUTHORIZATION or TW API KEY and TW API SECRET to request object headers
         """
-        tw_authorization = os.environ.get("TW_AUTHORIZATION", "")
-        if tw_authorization != "":
-            self.headers = {"Authorization":tw_authorization}
+        if connection.tw_authorization != "":
+            self.headers = {"Authorization":connection.tw_authorization}
         else:
-            tw_api_key = os.environ.get("TW_API_KEY", "")
-            tw_api_secret = os.environ.get("TW_API_SECRET", "")
-            self.headers = {"api-key":tw_api_key,"api-secret":tw_api_secret}
+            self.headers = {"api-key":connection.tw_key,"api-secret":connection.tw_secret}
+
+        if connection.cursor != None:
+            self.headers["cursor"] = connection.cursor
 
     @abstractmethod
     def operation(self):
         pass
     
-
 class PostRequest(Request):
 
-    def __init__(self, resourc, body):
-        self.connect = Connection()
-        url = "https://api.sandbox.threatwinds.com/api/v1/" + resourc
-        self.connect.add_connection(url)
-        self.add_headers()
+    def __init__(self, resource, connection, body):
         self.body = body
+        self.connect = connection
+        self.connect.tw_endpoint = self.connect.tw_endpoint + "/" + resource
+        self.add_headers(connection)
     
     def operation(self):
         """
         Function for execute the request to the endpoint
         """
-        response = requests.post(url=self.connect.endpoint, headers=self.headers, json=self.body)
+        response = requests.post(url=self.connect.tw_endpoint, headers=self.headers, json=self.body)
         return response
 
 class GetRequest(Request):
 
-    def __init__(self, resourc, params):
-        self.connect = Connection()
-        url = "https://api.sandbox.threatwinds.com/api/v1/" + resourc
-        self.connect.add_connection(url)
-        self.add_headers()
+    def __init__(self, resource, connection, params):
         self.params = params
-    
+        self.connect = connection
+        self.connect.tw_endpoint = self.connect.tw_endpoint + "/" + resource
+        self.add_headers(connection)
+        
     def operation(self):
         """
         Function for execute the request to the endpoint
         """
 
         if self.params == None:
-            response = requests.get(url=self.connect.endpoint,headers=self.headers)
+            response = requests.get(url=self.connect.tw_endpoint, headers=self.headers)
         else:
-            response = requests.get(url=self.connect.endpoint, headers=self.headers, params=self.params)
+            response = requests.get(url=self.connect.tw_endpoint, headers=self.headers, params=self.params)
         return response

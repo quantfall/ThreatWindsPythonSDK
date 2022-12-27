@@ -1,4 +1,5 @@
 from .functions import *
+from pythreatwinds_sdk.connection.builders import *
 
 def sent_entities_test():
     """
@@ -10,35 +11,26 @@ def sent_entities_test():
 
     print("\n")
 
-    entity =[
-  {
-        "type": "malware",
-        "value": "Dridex",
-        "reputation": -3,
-        "attributes": [],
-        "associations": [
-            {
-                "name": "",
-                "comment":"",
-                "entity":{
-                    "type": "ip",
-                    "value": "51.178.161.32",
-                    "reputation": -3,
-                    "attributes":[],
-                    "associations":[]
-                }
-            }
-        ]
-    }
-]
+    entity =[{"type":"domain","value":"host-host-file8.com","reputation":-1,"attributes":[],"associations":[]},{"type":"domain","value":"mark1234.duckdns.org","reputation":-1,"attributes":[],"associations":[]},{"type":"domain","value":"host-file-host6.com","reputation":-1,"attributes":[],"associations":[]},{"type":"domain","value":"clipper.guru","reputation":-1,"attributes":[],"associations":[]}]
 
     print("··············NEW ENTITY················")
     print(entity)
 
-    response, code = sent_entities(entity)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = sent_entities(entity, myConnection)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def sent_associations_test():
     """
@@ -50,15 +42,26 @@ def sent_associations_test():
 
     print("\n")
 
-    associations ={"associations": ["b97f454d-afad-421b-b157-38cda7d0b612", "3b387967-6242-4b8c-a25c-98c6270d1aa0"],"comment": "Any important comment about the association"}
+    associations ={"associations": ["ece287a0bea20702259fa39680d8686904c325da5f6965e201d8ea5dfd515767", "5d1aea8f65d4f5c2ee6c9ab31b4a861f27c55fc56218a04b598ca76d08e3addf"]}
 
     print("··············NEW ASSOCIATIONS················")
     print(associations)
 
-    response, code = sent_associations(associations)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = sent_associations(associations, myConnection)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def get_def_entities_test():
     """
@@ -70,29 +73,21 @@ def get_def_entities_test():
 
     print("\n")
 
-    response, code = get_def_entities()
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_def_entities(myConnection)
 
-def get_entities_search_test():
-    """
-    This function tests the operation of the function get_entities_search
-    """
-    print("######################################################################")
-    print("################ Test of the function get_entities_search ############### ")
-    print("######################################################################")
-
-    print("\n")
-    value = "malware"
-    print("Value: ",value)
-    print("limit: 50")
-    print("offset: 0")
-
-    response, code = get_entities_search(value= value)
-
-    print("Showing response:",response)
-    print("Showing return code:",code)
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def get_entities_type_test():
     """
@@ -104,39 +99,92 @@ def get_entities_type_test():
 
 
     print("\n")
-    value = "malware"
+
+    
+    #cursor = ""
+    value = "url"
     print("Value: ",value)
     print("format: list")
     print("limit: 50")
-    print("offset: 0")
-    print("reputation: bad")
-    print("accuracy: 0")
     print("lsa: now-24h")
 
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    response, code = get_entities_type(value= value)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_entities_type(myConnection, value= value)
 
-    print("Showing response:",response)
-    print("Showing return code:",code) 
+        print("Showing response:",response)
+        print("Showing return code:",code) 
 
-def get_entity_id_test():
+def get_entity_associations_test():
     """
-    This function tests the operation of the function get_entity_id
+    This function tests the operation of the function get_entity_associations
     """
     print("######################################################################")
-    print("################ Test of the function get_entity_id ############### ")
+    print("################ Test of the function get_entity_associations ############### ")
     print("######################################################################")
 
     print("\n")
-    value = "22721539-0471-440b-829e-069a9cdcc6ae"
+
+    #cursor = ""
+    value = "ece287a0bea20702259fa39680d8686904c325da5f6965e201d8ea5dfd515767"
     print("Value: ",value)
     print("limit: 50")
-    print("offset: 0")
 
-    response, code = get_entity_id(value= value)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_entity_associations(myConnection, value= value)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
+
+def get_entity_attributes_test():
+    """
+    This function tests the operation of the function get_entity_attributes
+    """
+    print("######################################################################")
+    print("################ Test of the function get_entity_attributes ############### ")
+    print("######################################################################")
+
+    print("\n")
+
+    #cursor = ""
+    value = "ece287a0bea20702259fa39680d8686904c325da5f6965e201d8ea5dfd515767"
+    print("Value: ",value)
+    print("limit: 50")
+
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
+
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_entity_attributes(myConnection, value= value)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def get_entity_value_test():
     """
@@ -147,15 +195,26 @@ def get_entity_value_test():
     print("######################################################################")
 
     print("\n")
-    value = "Dridex"
+    value = "clipper.guru"
+    type = "domain"
     print("Value: ",value)
-    print("limit: 50")
-    print("offset: 0")
+    print("Type: ",type)
 
-    response, code = get_entity_value(value= value)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_entity_value(myConnection, value= value, type=type)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def sent_geoip_location_test():
     """
@@ -180,10 +239,21 @@ def sent_geoip_location_test():
     print("··············NEW LOCATION················")
     print(location)
 
-    response, code = sent_geoip_location(location)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = sent_geoip_location(myConnection,location)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def get_geoip_location_test():
     """
@@ -197,10 +267,21 @@ def get_geoip_location_test():
     ip = "1.1.1.0"
     print("IP: ",ip)
 
-    response, code = get_geoip_location(ip)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_geoip_location(myConnection,ip)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def sent_geoip_organization_test():
     """
@@ -221,10 +302,21 @@ def sent_geoip_organization_test():
     print("··············NEW ORGANIZATION················")
     print(organization)
 
-    response, code = sent_geoip_organization(organization)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = sent_geoip_organization(myConnection,organization)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
 
 def get_geoip_organization_test():
     """
@@ -238,7 +330,18 @@ def get_geoip_organization_test():
     ip = "1.1.1.0"
     print("IP: ",ip)
 
-    response, code = get_geoip_organization(ip)
+    web_conn_builder = BuilderConnection()
+    web_conn_builder.with_api_url("")
+    #asig_auth = web_conn_builder.with_authorization('')
+    asig_auth1 = web_conn_builder.with_key("")
+    asig_auth2 = web_conn_builder.with_secret("")
 
-    print("Showing response:",response)
-    print("Showing return code:",code)
+    if asig_auth1 == False and asig_auth2 == False:
+        print("An error occurred while assigning the authentication parameters")
+        exit(1)
+    else:
+        myConnection = web_conn_builder.build_client()
+        response, code = get_geoip_organization(myConnection,ip)
+
+        print("Showing response:",response)
+        print("Showing return code:",code)
