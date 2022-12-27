@@ -1,22 +1,19 @@
-class ConnectionMeta(type):
-
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        
-        if cls not in cls._instances:
-            instance = super().__call__(*args, **kwargs)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
-
-
-class Connection(metaclass=ConnectionMeta):
-    """
-    Template for make a connection object
-    """
-
+class WebClientService():
     def __init__(self):
-        self.endpoint = None
+        self.tw_endpoint = ""
+        self.tw_key = ""
+        self.tw_secret = ""
+        self.tw_authorization = ""
+        self.cursor = None
 
-    def add_connection(self,url):
-        self.endpoint = url
+    def add_url(self, url): 
+        self.tw_endpoint = url
+
+    def add_key(self, key): 
+        self.tw_key = key
+    
+    def add_secret(self, secret): 
+        self.tw_secret = secret
+    
+    def add_authorization(self, authorization): 
+        self.tw_authorization = authorization

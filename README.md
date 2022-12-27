@@ -3,7 +3,7 @@
 _ThreatWindsPythonSDK is a set of tools that allow interaction with ThreatWinds API. This SDK has functions to obtain information about active threats, and at the same time add new threats_
 
 ## Getting started
-_You must create in the root of your project an .env file that will contain the values ​​TW_AUTHORIZATION, or TW_API_KEY and TW_API_SECRET._
+_To work with this SDK you need an AUTHORIZATION, or a KEY and a SECRET. Having this you can pass it to the function as arguments. You can also create in the root of your project an .env file that will contain the values ​​TW_AUTHORIZATION, or TW_API_KEY and TW_API_SECRET with their values._
 
 ### Requirements
 
@@ -27,40 +27,54 @@ python -m pip install python-dotenv
 
 ## Deploy
 
-_You should be aware that these functions return two values. The first **response** value will save the response if the request was successful. If it was not successful, it will be the value None. The second value **code**, will be the response code received. In case there is a connection problem, this second value will be 0_
+_First you must create an object of type BuilderConnection, to create the connection as shown below:_
+
+```
+conn_builder = BuilderConnection()
+```
+
+_Then you must assign the connection attributes, note that these methods return a boolean value, which is True if you have assigned the value without problems and False if an error occurred. To assign the api url attribute, you need to assign it as follows:_
+
+```
+conn_builder.with_api_url("https://xxx.threatwinds.xxx")
+```
+
+_Depending on the authentication parameters that you are going to use, you must create the connection attributes, if you have the value TW_AUTHORIZACION, you must assign it as follows:_
+
+```
+conn_builder.with_authorization('Bearer XXxxxxXxxxxxXXXxXXx')
+```
+
+_If you have the value TW_API_KEY and the TW_API_SECRET, you must assign them as follows:_
+
+```
+conn_builder.with_key("XXxXXXXXxXXxxxxxxXXxXxX")
+conn_builder.with_secret("XXxXXXXXxXXxxxxxxXXxXxX")
+```
+
+_If you want to assign these values ​​from environment variables, through the .env file in the root of your project, you can leave the parameters that you pass to the methods empty, as follows:_
+
+```
+conn_builder.with_api_url("")
+conn_builder.with_authorization("")
+conn_builder.with_key("")
+conn_builder.with_secret("")
+```
+
+_When you assign the connection attributes, you just have to build your connection like this:_
+
+```
+my_connection = conn_builder.build_client()
+```
+
+_Then you only have to call the function you want to use, and pass the connection created. You should be aware that these functions return two values. The first **response** value will save the response if the request was successful. If it was not successful, it will be the value None. The second value **code**, will be the response code received. In case there is a connection problem, this second value will be 0_
 
 ### Function sent_entities
 
 _For insert new entities, you need to call the following function. If the request is correct, the first value received **response** will be an acknowledged message:_
 
 ```
-response, code = pythreatwinds_sdk.sent_entities(new_entities)
-```
-
-Where new_entities must be a list of objects in the following format:
-
-```
-[
-  {
-        "type": "malware",
-        "value": "Dridex",
-        "reputation": -3,
-        "attributes": [],
-        "associations": [
-            {
-                "name": "",
-                "comment":"",
-                "entity":{
-                    "type": "ip",
-                    "value": "51.178.161.32",
-                    "reputation": -3,
-                    "attributes":[],
-                    "associations":[]
-                }
-            }
-        ]
-    }
-]
+response, code = pythreatwinds_sdk.sent_entities(new_entities, my_connection)
 ```
 
 ### Function sent_associations
@@ -68,19 +82,7 @@ Where new_entities must be a list of objects in the following format:
 _For insert new associations, you need to call the following function. If the request is correct, the first value received **response** will be an acknowledged message:_
 
 ```
-response, code = pythreatwinds_sdk.sent_associations(new_associations)
-```
-
-Where new_associations must be a objects in the following format:
-
-```
-{
-  "associations": [
-    "b97f454d-afad-421b-b157-38cda7d0b612", 
-    "22721539-0471-440b-829e-069a9cdcc6ae"
-  ],
-  "comment": "Any important comment about the association"
-}
+response, code = pythreatwinds_sdk.sent_associations(new_associations, my_connection)
 ```
 
 ### Function get_def_entities
@@ -88,66 +90,63 @@ Where new_associations must be a objects in the following format:
 _For request entity definitions, you need to call the following function. If the request is correct, the first value received **response** will be a list of entity definitions:_
 
 ```
-response, code = pythreatwinds_sdk.get_def_entities()
+response, code = pythreatwinds_sdk.get_def_entities(my_connection)
 ```
 
-### Function get_entities_search
-
-_For find a list of entities containing a string, you must call to the following function. If the request is correct, the first value received **response** will be a list of the entities found:_
-```
-response, code = pythreatwinds_sdk.get_entities_search(value, limit, offset)
-```
-
-_Must be passed as arguments:_
-    -value: Must be a string that will be searched.If you don't have quotes, it will be searched as independent words, only elements that contain all the words will be returned. The order of the words doesn't matter. If it is enclosed in quotes: it will be searched as a complete phrase, only elements that contain all the words in the exact order will be returned. The word "or" works like the OR operator in a programming language. The words or, and, the, he, she, it, etc. are not taken into account as search parameters. A hyphen works like the negation operator in a programming language.
-    -limit: Must be an integer>0. Default 50. Is optional
-    -offset: Must be an integer>=0. Default 0. Is optional
-
-  ### Function get_entities_type
+### Function get_entities_type
 
 _For find a list of entities of some type, you must call the following function. If the request is correct, the first value received **response** will be a list of the entities found:_
 ```
-response, code = pythreatwinds_sdk.get_entities_type(value, limit, offset, reputation, accuracy, lsa)
+response, code = pythreatwinds_sdk.get_entities_type(my_connection, value, limit, lsa, cursor)
 ```
 
 _Must be passed as arguments:_
     -value: entity type.Must be a string. Consult **Function get_def_entities**
     -limit: Must be an integer>0. Default 50. Is optional
-    -offset: Must be an integer>=0. Default 0. Is optional
-    -reputation: Must be any, bad or good. Default bad. Is optional
-    -accuracy: Must be an integer betwen o to 3. Default 0. Is optional
     -lsa: Must be a timestamp in seconds since Unix(UTC) or a relative time like now-15m, now-30m, now-1h, now-8h, now-24h, now-7d, now-30d, now-90d or now-120d. Default now-24h. Is optional
+    -cursor: Empty in the first request, then the returned string in the response header  with name: next-cursor
 
-### Function get_entity_id
+### Function get_entity_associations
 
-_For find an entity with an id, you must call to the following function. If the request is correct, the first value received **response** will be the entity found:_
+_For find an entity associations with an id, you must call to the following function. If the request is correct, the first value received **response** will be the entity found:_
 ```
-response, code = pythreatwinds_sdk.get_entity_id(value, limit, offset)
+response, code = pythreatwinds_sdk.get_entity_associations(my_connection, value, limit, cursor)
 ```
 
 _Must be passed as arguments:_
     -value: Entity ID. Must be a string
     -limit: Must be an integer>0. Default 50. Is optional
-    -offset: Must be an integer>=0. Default 0. Is optional
+    -cursor: Empty in the first request, then the returned string in the response header  with name: next-cursor
+
+### Function get_entity_attributes
+
+_For find an entity attributes with an id, you must call to the following function. If the request is correct, the first value received **response** will be the entity found:_
+```
+response, code = pythreatwinds_sdk.get_entity_attributes(my_connection, value, limit, cursor)
+```
+
+_Must be passed as arguments:_
+    -value: Entity ID. Must be a string
+    -limit: Must be an integer>0. Default 50. Is optional
+    -cursor: Empty in the first request, then the returned string in the response header  with name: next-cursor
 
 ### Function get_entity_value
 
 _For find an entity with an value, you must call to the following function. If the request is correct, the first value received **response** will be the entity found:_
 ```
-response, code = pythreatwinds_sdk.get_entity_value(value, limit, offset)
+response, code = pythreatwinds_sdk.get_entity_value(my_connection, value, type)
 ```
 
 _Must be passed as arguments:_
     -value: Entity value. Must be a string
-    -limit: Must be an integer>0. Default 50. Is optional
-    -offset: Must be an integer>=0. Default 0. Is optional
+    -type: Entity type. Must be a string
 
 ### Function sent_geoip_location
 
 _For sent a new location, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
 
 ```
-response, code = pythreatwinds_sdk.sent_geoip_location(new_location)
+response, code = pythreatwinds_sdk.sent_geoip_location(my_connection,new_location)
 ```
 
 Where new_location must be an object with the following format:
@@ -168,7 +167,7 @@ Where new_location must be an object with the following format:
 
 _For find the geolocation of the given IP, you must call to the following function. If the request is correct, the first value received **response** will be the geolocation found:_
 ```
-response, code = pythreatwinds_sdk.get_geoip_location(ip)
+response, code = pythreatwinds_sdk.get_geoip_location(my_connection,ip)
 ```
 
 _Must be passed as arguments:_
@@ -179,7 +178,7 @@ _Must be passed as arguments:_
 _For sent a new organization, you need to call the following function. If the request is correct, the first value received **response** will be message acknowledged:_
 
 ```
-response, code = pythreatwinds_sdk.sent_geoip_organization(new_organization)
+response, code = pythreatwinds_sdk.sent_geoip_organization(my_connection,new_organization)
 ```
 
 Where new_location must be an object with the following format:
@@ -196,7 +195,7 @@ Where new_location must be an object with the following format:
 
 _For find the organization of the given IP, you must call to the following function. If the request is correct, the first value received **response** will be the organization found:_
 ```
-response, code = pythreatwinds_sdk.get_geoip_organization(ip)
+response, code = pythreatwinds_sdk.get_geoip_organization(my_connection,ip)
 ```
 
 _Must be passed as arguments:_
